@@ -1,0 +1,23 @@
+{
+  "name": "api-tester-ai-mcp",
+  "description": "MEOK AI Labs \u2014 Api Tester tools for AI agents and LLMs",
+  "vendor": "MEOK AI Labs",
+  "homepage": "https://meok.ai",
+  "repository": "https://github.com/CSOAI-ORG/api-tester-ai-mcp",
+  "runtime": "python",
+  "entrypoint": "server.py",
+  "tools": [
+    "send_request",
+    "validate_response",
+    "check_headers",
+    "generate_curl"
+  ],
+  "categories": [
+    "Testing",
+    "Developer Tools"
+  ],
+  "pricing": {
+    "free": "50 calls/day",
+    "pro": "$9/mo"
+  }
+}

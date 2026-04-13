@@ -1,0 +1,10 @@
+name: api-tester-ai-mcp
+description: "MEOK AI Labs — Api Tester tools for AI agents and LLMs"
+vendor: MEOK AI Labs
+homepage: https://meok.ai
+repository: https://github.com/CSOAI-ORG/api-tester-ai-mcp
+license: MIT
+categories: [Testing, Developer Tools]
+tags: [api-testing, http-testing, endpoint-testing, rest-api, integration-testing]
+runtime: python
+entrypoint: server.py

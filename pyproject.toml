@@ -4,12 +4,20 @@ build-backend = "hatchling.build"
 
 [project]
 name = "api-tester-ai-mcp"
-version = "0.1.0"
-description = "API testing and validation tools."
+version = "1.0.0"
+description = "MEOK AI Labs — Api Tester tools for AI agents and LLMs"
 authors = [{name="MEOK AI Labs", email="nicholas@meok.ai"}]
 readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.10"
+keywords = ["mcp", "mcp-server", "model-context-protocol", "claude", "ai-tools", "meok-ai-labs", "api-testing", "http-testing", "endpoint-testing", "rest-api", "integration-testing"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Intended Audience :: Developers",
+]
 dependencies = [
     "mcp>=1.0.0",
 ]
@@ -17,3 +25,5 @@ dependencies = [
 [project.urls]
 Homepage = "https://meok.ai"
 Repository = "https://github.com/CSOAI-ORG/api-tester-ai-mcp"
+Documentation = "https://meok.ai/docs/api-tester-ai-mcp"
+"Bug Tracker" = "https://github.com/CSOAI-ORG/api-tester-ai-mcp/issues"
