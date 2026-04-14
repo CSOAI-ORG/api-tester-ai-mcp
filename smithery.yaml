@@ -1,10 +1,62 @@
 name: api-tester-ai-mcp
-description: "MEOK AI Labs — Api Tester tools for AI agents and LLMs"
-vendor: MEOK AI Labs
-homepage: https://meok.ai
-repository: https://github.com/CSOAI-ORG/api-tester-ai-mcp
-license: MIT
-categories: [Testing, Developer Tools]
-tags: [api-testing, http-testing, endpoint-testing, rest-api, integration-testing]
-runtime: python
-entrypoint: server.py
+description: MCP server for API testing and validation tools.
+version: 1.0.0
+tools:
+- name: send_request
+  description: Build and send an HTTP request. Returns request details (actual sending
+    requires urllib/requests).
+  parameters:
+  - name: method
+    type: string
+    required: true
+  - name: url
+    type: string
+    required: true
+  - name: headers
+    type: string
+    required: false
+  - name: body
+    type: string
+    required: false
+  - name: timeout
+    type: integer
+    required: false
+- name: validate_response
+  description: Validate an API response against expectations.
+  parameters:
+  - name: status_code
+    type: integer
+    required: true
+  - name: body
+    type: string
+    required: true
+  - name: expected_status
+    type: integer
+    required: false
+  - name: required_fields
+    type: string
+    required: false
+  - name: content_type
+    type: string
+    required: false
+- name: check_headers
+  description: Analyze HTTP response headers for security and best practices.
+  parameters:
+  - name: headers_json
+    type: string
+    required: true
+- name: generate_curl
+  description: Generate a curl command from request parameters.
+  parameters:
+  - name: method
+    type: string
+    required: true
+  - name: url
+    type: string
+    required: true
+  - name: headers
+    type: string
+    required: false
+  - name: body
+    type: string
+    required: false

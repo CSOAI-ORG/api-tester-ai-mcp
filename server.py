@@ -1,4 +1,9 @@
 """API Tester AI MCP Server — API testing and validation tools."""
+
+import sys, os
+sys.path.insert(0, os.path.expanduser('~/clawd/meok-labs-engine/shared'))
+from auth_middleware import check_access
+
 import json
 import time
 from typing import Any
@@ -19,8 +24,12 @@ def _rate_check(tool: str) -> bool:
     return True
 
 @mcp.tool()
-def send_request(method: str, url: str, headers: str = "", body: str = "", timeout: int = 30) -> dict[str, Any]:
+def send_request(method: str, url: str, headers: str = "", body: str = "", timeout: int = 30, api_key: str = "") -> dict[str, Any]:
     """Build and send an HTTP request. Returns request details (actual sending requires urllib/requests)."""
+    allowed, msg, tier = check_access(api_key)
+    if not allowed:
+        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+
     if not _rate_check("send_request"):
         return {"error": "Rate limit exceeded (50/day)"}
     method = method.upper()
@@ -67,8 +76,12 @@ def send_request(method: str, url: str, headers: str = "", body: str = "", timeo
         return {"error": str(e), "url": url, "method": method, "request_headers": hdrs}
 
 @mcp.tool()
-def validate_response(status_code: int, body: str, expected_status: int = 200, required_fields: str = "", content_type: str = "") -> dict[str, Any]:
+def validate_response(status_code: int, body: str, expected_status: int = 200, required_fields: str = "", content_type: str = "", api_key: str = "") -> dict[str, Any]:
     """Validate an API response against expectations."""
+    allowed, msg, tier = check_access(api_key)
+    if not allowed:
+        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+
     if not _rate_check("validate_response"):
         return {"error": "Rate limit exceeded (50/day)"}
     issues = []
@@ -93,8 +106,12 @@ def validate_response(status_code: int, body: str, expected_status: int = 200, r
     }
 
 @mcp.tool()
-def check_headers(headers_json: str) -> dict[str, Any]:
+def check_headers(headers_json: str, api_key: str = "") -> dict[str, Any]:
     """Analyze HTTP response headers for security and best practices."""
+    allowed, msg, tier = check_access(api_key)
+    if not allowed:
+        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+
     if not _rate_check("check_headers"):
         return {"error": "Rate limit exceeded (50/day)"}
     try:
@@ -129,8 +146,12 @@ def check_headers(headers_json: str) -> dict[str, Any]:
     }
 
 @mcp.tool()
-def generate_curl(method: str, url: str, headers: str = "", body: str = "") -> dict[str, Any]:
+def generate_curl(method: str, url: str, headers: str = "", body: str = "", api_key: str = "") -> dict[str, Any]:
     """Generate a curl command from request parameters."""
+    allowed, msg, tier = check_access(api_key)
+    if not allowed:
+        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+
     if not _rate_check("generate_curl"):
         return {"error": "Rate limit exceeded (50/day)"}
     parts = ["curl", "-X", method.upper()]

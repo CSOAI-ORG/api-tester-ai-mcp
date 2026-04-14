@@ -1,23 +1,103 @@
 {
   "name": "api-tester-ai-mcp",
-  "description": "MEOK AI Labs \u2014 Api Tester tools for AI agents and LLMs",
-  "vendor": "MEOK AI Labs",
-  "homepage": "https://meok.ai",
-  "repository": "https://github.com/CSOAI-ORG/api-tester-ai-mcp",
-  "runtime": "python",
-  "entrypoint": "server.py",
+  "description": "MCP server for API testing and validation tools.",
+  "version": "1.0.0",
   "tools": [
-    "send_request",
-    "validate_response",
-    "check_headers",
-    "generate_curl"
-  ],
-  "categories": [
-    "Testing",
-    "Developer Tools"
-  ],
-  "pricing": {
-    "free": "50 calls/day",
-    "pro": "$9/mo"
-  }
+    {
+      "name": "send_request",
+      "description": "Build and send an HTTP request. Returns request details (actual sending requires urllib/requests).",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "method": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "headers": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "timeout": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "method",
+          "url"
+        ]
+      }
+    },
+    {
+      "name": "validate_response",
+      "description": "Validate an API response against expectations.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "status_code": {
+            "type": "integer"
+          },
+          "body": {
+            "type": "string"
+          },
+          "expected_status": {
+            "type": "integer"
+          },
+          "required_fields": {
+            "type": "string"
+          },
+          "content_type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "status_code",
+          "body"
+        ]
+      }
+    },
+    {
+      "name": "check_headers",
+      "description": "Analyze HTTP response headers for security and best practices.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "headers_json": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "headers_json"
+        ]
+      }
+    },
+    {
+      "name": "generate_curl",
+      "description": "Generate a curl command from request parameters.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "method": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "headers": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "method",
+          "url"
+        ]
+      }
+    }
+  ]
 }
