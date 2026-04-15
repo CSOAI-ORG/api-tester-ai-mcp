@@ -1,0 +1,10 @@
+{
+  "name": "api-tester-ai-mcp",
+  "description": "MEOK AI Labs \u2014 api-tester-ai-mcp",
+  "vendor": "MEOK AI Labs",
+  "homepage": "https://meok.ai",
+  "repository": "https://github.com/CSOAI-ORG/api-tester-ai-mcp",
+  "license": "MIT",
+  "runtime": "python",
+  "entryPoint": "mcp-wrapper.py"
+}
