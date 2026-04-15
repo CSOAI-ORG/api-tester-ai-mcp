@@ -1,0 +1,53 @@
+{
+  "name": "api-tester-ai",
+  "description": "Api Tester Ai tools powered by MEOK AI Labs.",
+  "version": "1.0.0",
+  "protocol_version": "2025-11-25",
+  "publisher": {
+    "name": "MEOK AI Labs",
+    "url": "https://meok.ai",
+    "email": "nicholas@meok.ai"
+  },
+  "repository": "https://github.com/CSOAI-ORG/api-tester-ai-mcp",
+  "license": "MIT",
+  "transport": [
+    "stdio",
+    "streamable-http"
+  ],
+  "authentication": {
+    "type": "api-key",
+    "free_tier": true,
+    "free_limit": "15 calls/day"
+  },
+  "tools": [
+    {
+      "name": "send_request",
+      "description": "Build and send an HTTP request. Returns request details (actual sending requires urllib/requests)."
+    },
+    {
+      "name": "validate_response",
+      "description": "Validate an API response against expectations."
+    },
+    {
+      "name": "check_headers",
+      "description": "Analyze HTTP response headers for security and best practices."
+    },
+    {
+      "name": "generate_curl",
+      "description": "Generate a curl command from request parameters."
+    }
+  ],
+  "categories": [
+    "AI & Machine Learning",
+    "Developer Tools"
+  ],
+  "pricing": {
+    "free": {
+      "calls_per_day": 15
+    },
+    "pro": {
+      "price": "$29/month",
+      "url": "https://meok.ai/pricing"
+    }
+  }
+}
