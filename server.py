@@ -10,7 +10,7 @@ from typing import Any
 from urllib.parse import urlparse
 from mcp.server.fastmcp import FastMCP
 
-mcp = FastMCP("api-tester-ai-mcp")
+mcp = FastMCP("api-tester-ai", instructions="MEOK AI Labs MCP Server")
 _calls: dict[str, list[float]] = {}
 DAILY_LIMIT = 50
 
