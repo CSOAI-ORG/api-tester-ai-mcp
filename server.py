@@ -10,6 +10,18 @@ from typing import Any
 from urllib.parse import urlparse
 from mcp.server.fastmcp import FastMCP
 
+from datetime import datetime, timezone
+from collections import defaultdict
+
+FREE_DAILY_LIMIT = 15
+_usage = defaultdict(list)
+def _rl(c="anon"):
+    now = datetime.now(timezone.utc)
+    _usage[c] = [t for t in _usage[c] if (now-t).total_seconds() < 86400]
+    if len(_usage[c]) >= FREE_DAILY_LIMIT: return json.dumps({"error": f"Limit {FREE_DAILY_LIMIT}/day"})
+    _usage[c].append(now); return None
+
+
 mcp = FastMCP("api-tester-ai", instructions="MEOK AI Labs MCP Server")
 _calls: dict[str, list[float]] = {}
 DAILY_LIMIT = 50
@@ -29,6 +41,7 @@ def send_request(method: str, url: str, headers: str = "", body: str = "", timeo
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+    if err := _rl(): return err
 
     if not _rate_check("send_request"):
         return {"error": "Rate limit exceeded (50/day)"}
@@ -81,6 +94,7 @@ def validate_response(status_code: int, body: str, expected_status: int = 200, r
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+    if err := _rl(): return err
 
     if not _rate_check("validate_response"):
         return {"error": "Rate limit exceeded (50/day)"}
@@ -111,6 +125,7 @@ def check_headers(headers_json: str, api_key: str = "") -> dict[str, Any]:
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+    if err := _rl(): return err
 
     if not _rate_check("check_headers"):
         return {"error": "Rate limit exceeded (50/day)"}
@@ -151,6 +166,7 @@ def generate_curl(method: str, url: str, headers: str = "", body: str = "", api_
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+    if err := _rl(): return err
 
     if not _rate_check("generate_curl"):
         return {"error": "Rate limit exceeded (50/day)"}
