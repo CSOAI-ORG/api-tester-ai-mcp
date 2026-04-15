@@ -1,5 +1,6 @@
 name: api-tester-ai-mcp
-description: MEOK AI Labs MCP Server
+description: MCP server for api tester ai. Features send request, validate response,
+  check headers. From MEOK AI Labs.
 version: 1.0.0
 tools:
 - name: send_request
