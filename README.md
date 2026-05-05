@@ -4,7 +4,7 @@
 
 # Api Tester Ai Mcp
 
-**Immutable audit trails with SHA-256 hash chain verification for compliance certifications**
+**API testing, validation, and security header analysis**
 
 [![npm version](https://img.shields.io/npm/v/@meok-ai/api-tester-ai-mcp)](https://www.npmjs.com/package/@meok-ai/api-tester-ai-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
