@@ -52,6 +52,15 @@ def send_request(method: str, url: str, headers: str = "", body: str = "", timeo
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        method (str): The method to analyze or process.
+        url (str): The url to analyze or process.
+        headers (str): The headers to analyze or process.
+        body (str): The body to analyze or process.
+        timeout (int): The timeout to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
@@ -135,6 +144,15 @@ def validate_response(status_code: int, body: str, expected_status: int = 200, r
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        status_code (int): The status code to analyze or process.
+        body (str): The body to analyze or process.
+        expected_status (int): The expected status to analyze or process.
+        required_fields (str): The required fields to analyze or process.
+        content_type (str): The content type to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
@@ -196,6 +214,11 @@ def check_headers(headers_json: str, api_key: str = "") -> dict[str, Any]:
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        headers_json (str): The headers json to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
@@ -266,6 +289,14 @@ def generate_curl(method: str, url: str, headers: str = "", body: str = "", api_
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        method (str): The method to analyze or process.
+        url (str): The url to analyze or process.
+        headers (str): The headers to analyze or process.
+        body (str): The body to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
