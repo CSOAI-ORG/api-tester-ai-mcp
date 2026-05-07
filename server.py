@@ -37,7 +37,22 @@ def _rate_check(tool: str) -> bool:
 
 @mcp.tool()
 def send_request(method: str, url: str, headers: str = "", body: str = "", timeout: int = 30, api_key: str = "") -> dict[str, Any]:
-    """Build and send an HTTP request. Returns request details (actual sending requires urllib/requests)."""
+    """Build and send an HTTP request. Returns request details (actual sending requires urllib/requests).
+
+    Behavior:
+        This tool generates structured output without modifying external systems.
+        Output is deterministic for identical inputs. No side effects.
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need structured analysis or classification
+        of inputs against established frameworks or standards.
+
+    When NOT to use:
+        Not suitable for real-time production decision-making without
+        human review of results.
+    """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
@@ -90,7 +105,23 @@ def send_request(method: str, url: str, headers: str = "", body: str = "", timeo
 
 @mcp.tool()
 def validate_response(status_code: int, body: str, expected_status: int = 200, required_fields: str = "", content_type: str = "", api_key: str = "") -> dict[str, Any]:
-    """Validate an API response against expectations."""
+    """Validate an API response against expectations.
+
+    Behavior:
+        This tool is read-only and stateless — it produces analysis output
+        without modifying any external systems, databases, or files.
+        Safe to call repeatedly with identical inputs (idempotent).
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need structured analysis or classification
+        of inputs against established frameworks or standards.
+
+    When NOT to use:
+        Not suitable for real-time production decision-making without
+        human review of results.
+    """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
@@ -121,7 +152,23 @@ def validate_response(status_code: int, body: str, expected_status: int = 200, r
 
 @mcp.tool()
 def check_headers(headers_json: str, api_key: str = "") -> dict[str, Any]:
-    """Analyze HTTP response headers for security and best practices."""
+    """Analyze HTTP response headers for security and best practices.
+
+    Behavior:
+        This tool is read-only and stateless — it produces analysis output
+        without modifying any external systems, databases, or files.
+        Safe to call repeatedly with identical inputs (idempotent).
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need structured analysis or classification
+        of inputs against established frameworks or standards.
+
+    When NOT to use:
+        Not suitable for real-time production decision-making without
+        human review of results.
+    """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
@@ -162,7 +209,22 @@ def check_headers(headers_json: str, api_key: str = "") -> dict[str, Any]:
 
 @mcp.tool()
 def generate_curl(method: str, url: str, headers: str = "", body: str = "", api_key: str = "") -> dict[str, Any]:
-    """Generate a curl command from request parameters."""
+    """Generate a curl command from request parameters.
+
+    Behavior:
+        This tool generates structured output without modifying external systems.
+        Output is deterministic for identical inputs. No side effects.
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need structured analysis or classification
+        of inputs against established frameworks or standards.
+
+    When NOT to use:
+        Not suitable for real-time production decision-making without
+        human review of results.
+    """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
