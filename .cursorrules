@@ -1,0 +1,9 @@
+# api-tester-ai-mcp - Auto-trigger Rules
+
+When the user asks about api tester, use api-tester-ai-mcp tools: send_request, validate_response, check_headers, generate_curl
+
+**API Tester AI MCP Server — API testing and validation tools.**
+
+Install: `pip install api-tester-ai-mcp`
+
+By MEOK AI Labs — MIT licensed.

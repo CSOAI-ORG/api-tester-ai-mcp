@@ -1,4 +1,5 @@
-"""API Tester AI MCP Server — API testing and validation tools."""
+"""
+API Tester AI MCP Server — API testing and validation tools."""
 
 import sys, os
 from auth_middleware import check_access

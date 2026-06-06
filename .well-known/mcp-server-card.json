@@ -1,0 +1,25 @@
+{
+  "name": "api-tester-ai-mcp",
+  "title": "Api Tester Ai Mcp",
+  "description": "MCP server for api tester ai. Features send request, validate response, check headers. From MEOK AI Labs.",
+  "version": "1.0.7",
+  "homepage": "https://meok.ai",
+  "license": "MIT",
+  "transport": {
+    "type": "stdio"
+  },
+  "tools": [
+    {
+      "name": "send_request"
+    },
+    {
+      "name": "validate_response"
+    },
+    {
+      "name": "check_headers"
+    },
+    {
+      "name": "generate_curl"
+    }
+  ]
+}
