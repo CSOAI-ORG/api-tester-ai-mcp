@@ -1,0 +1,22 @@
+{
+  "acpVersion": "0.1",
+  "agent": {
+    "name": "api-tester-ai-mcp",
+    "description": "Api Tester Ai MCP Server by MEOK AI Labs",
+    "version": "1.0.7",
+    "provider": "MEOK AI Labs",
+    "interfaces": [
+      {
+        "type": "mcp",
+        "transport": "stdio",
+        "package": "api-tester-ai-mcp"
+      }
+    ],
+    "capabilities": [
+      "send_request",
+      "validate_response",
+      "check_headers",
+      "generate_curl"
+    ]
+  }
+}
