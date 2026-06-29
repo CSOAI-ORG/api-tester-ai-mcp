@@ -1,6 +1,7 @@
 import os
 import sys
 import unittest
+from unittest.mock import patch
 
 # Ensure shared auth middleware is available
 sys.path.insert(0, os.path.expanduser("~/clawd/meok-labs-engine/shared"))
@@ -36,6 +37,54 @@ class TestAuthMiddleware(unittest.TestCase):
         result = check_access("")
         self.assertIsInstance(result, tuple)
         self.assertEqual(len(result), 3)
+
+
+class TestSendRequest(unittest.TestCase):
+    def test_send_request_returns_response_details(self):
+        """send_request must execute a valid mocked HTTP request."""
+        import server as srv
+
+        class DummyResponse:
+            status = 201
+            reason = "Created"
+            headers = {"Content-Type": "application/json"}
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, exc_type, exc, traceback):
+                return False
+
+            def read(self):
+                return b'{"ok": true}'
+
+        srv._calls.clear()
+        srv._usage.clear()
+
+        with patch("server.check_access", return_value=(True, "OK", "free")), patch(
+            "server.urllib.request.urlopen",
+            return_value=DummyResponse(),
+        ) as urlopen:
+            result = srv.send_request(
+                "post",
+                "https://example.com/items",
+                headers='{"X-Test": "1"}',
+                body='{"name": "Ada"}',
+            )
+
+        self.assertEqual(result["status_code"], 201)
+        self.assertEqual(result["reason"], "Created")
+        self.assertEqual(result["body"], '{"ok": true}')
+        self.assertEqual(result["method"], "POST")
+        self.assertEqual(result["url"], "https://example.com/items")
+
+        request = urlopen.call_args.args[0]
+        self.assertEqual(request.get_method(), "POST")
+        self.assertEqual(request.data, b'{"name": "Ada"}')
+
+        headers = {name.lower(): value for name, value in request.header_items()}
+        self.assertEqual(headers["x-test"], "1")
+        self.assertEqual(headers["content-type"], "application/json")
 
 
 class TestHealthEndpoint(unittest.TestCase):
