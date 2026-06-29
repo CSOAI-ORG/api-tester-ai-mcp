@@ -1,11 +1,12 @@
 """
-API Tester AI MCP Server — API testing and validation tools."""
+API Tester AI MCP Server - API testing and validation tools."""
 
 import sys, os
 from auth_middleware import check_access
 
 import json
 import time
+import urllib.request
 from typing import Any
 from urllib.parse import urlparse
 from mcp.server.fastmcp import FastMCP
@@ -91,7 +92,7 @@ def send_request(method: str, url: str, headers: str = "", body: str = "", timeo
           included in responses (X-RateLimit-Remaining, X-RateLimit-Reset).
         - Error Handling: Returns structured error objects with 'error' key on failure.
           Never raises unhandled exceptions. Invalid inputs return descriptive validation errors.
-        - Idempotency: Fully idempotent — calling with the same inputs always produces the
+        - Idempotency: Fully idempotent - calling with the same inputs always produces the
           same output. Safe to retry on timeout or transient failure.
         - Data Privacy: No input data is stored, logged, or transmitted to external services.
           All processing happens locally within the MCP server process.
@@ -125,16 +126,6 @@ def send_request(method: str, url: str, headers: str = "", body: str = "", timeo
             body_parsed = json.loads(body)
         except json.JSONDecodeError:
             body_parsed = body
-    import urllib.request
-
-STRIPE_199 = "https://buy.stripe.com/aFa7sNcgAdQS0ZT1Uc8k91t"
-
-def _add_upgrade_tail(response, tier="free"):
-    """Append upgrade nudge to free-tier success responses."""
-    if isinstance(response, dict) and tier == "free":
-        response["_upgrade_note"] = "Pro tier: unlimited calls + priority support. Upgrade: " + STRIPE_199
-    return response
-
     req = urllib.request.Request(url, method=method)
     for k, v in hdrs.items():
         req.add_header(k, v)
@@ -155,12 +146,20 @@ def _add_upgrade_tail(response, tier="free"):
     except Exception as e:
         return {"error": str(e), "url": url, "method": method, "request_headers": hdrs}
 
+STRIPE_199 = "https://buy.stripe.com/aFa7sNcgAdQS0ZT1Uc8k91t"
+
+def _add_upgrade_tail(response, tier="free"):
+    """Append upgrade nudge to free-tier success responses."""
+    if isinstance(response, dict) and tier == "free":
+        response["_upgrade_note"] = "Pro tier: unlimited calls + priority support. Upgrade: " + STRIPE_199
+    return response
+
 @mcp.tool()
 def validate_response(status_code: int, body: str, expected_status: int = 200, required_fields: str = "", content_type: str = "", api_key: str = "") -> dict[str, Any]:
     """Validate an API response against expectations.
 
     Behavior:
-        This tool is read-only and stateless — it produces analysis output
+        This tool is read-only and stateless - it produces analysis output
         without modifying any external systems, databases, or files.
         Safe to call repeatedly with identical inputs (idempotent).
         Free tier: 10/day rate limit. Pro tier: unlimited.
@@ -192,7 +191,7 @@ def validate_response(status_code: int, body: str, expected_status: int = 200, r
           included in responses (X-RateLimit-Remaining, X-RateLimit-Reset).
         - Error Handling: Returns structured error objects with 'error' key on failure.
           Never raises unhandled exceptions. Invalid inputs return descriptive validation errors.
-        - Idempotency: Fully idempotent — calling with the same inputs always produces the
+        - Idempotency: Fully idempotent - calling with the same inputs always produces the
           same output. Safe to retry on timeout or transient failure.
         - Data Privacy: No input data is stored, logged, or transmitted to external services.
           All processing happens locally within the MCP server process.
@@ -230,7 +229,7 @@ def check_headers(headers_json: str, api_key: str = "") -> dict[str, Any]:
     """Analyze HTTP response headers for security and best practices.
 
     Behavior:
-        This tool is read-only and stateless — it produces analysis output
+        This tool is read-only and stateless - it produces analysis output
         without modifying any external systems, databases, or files.
         Safe to call repeatedly with identical inputs (idempotent).
         Free tier: 10/day rate limit. Pro tier: unlimited.
@@ -258,7 +257,7 @@ def check_headers(headers_json: str, api_key: str = "") -> dict[str, Any]:
           included in responses (X-RateLimit-Remaining, X-RateLimit-Reset).
         - Error Handling: Returns structured error objects with 'error' key on failure.
           Never raises unhandled exceptions. Invalid inputs return descriptive validation errors.
-        - Idempotency: Fully idempotent — calling with the same inputs always produces the
+        - Idempotency: Fully idempotent - calling with the same inputs always produces the
           same output. Safe to retry on timeout or transient failure.
         - Data Privacy: No input data is stored, logged, or transmitted to external services.
           All processing happens locally within the MCP server process.
@@ -277,8 +276,8 @@ def check_headers(headers_json: str, api_key: str = "") -> dict[str, Any]:
     headers_lower = {k.lower(): v for k, v in headers.items()}
     checks = []
     security_headers = {
-        "strict-transport-security": "HSTS — forces HTTPS",
-        "content-security-policy": "CSP — prevents XSS",
+        "strict-transport-security": "HSTS - forces HTTPS",
+        "content-security-policy": "CSP - prevents XSS",
         "x-content-type-options": "Prevents MIME sniffing",
         "x-frame-options": "Prevents clickjacking",
         "x-xss-protection": "XSS filter",
@@ -336,7 +335,7 @@ def generate_curl(method: str, url: str, headers: str = "", body: str = "", api_
           included in responses (X-RateLimit-Remaining, X-RateLimit-Reset).
         - Error Handling: Returns structured error objects with 'error' key on failure.
           Never raises unhandled exceptions. Invalid inputs return descriptive validation errors.
-        - Idempotency: Fully idempotent — calling with the same inputs always produces the
+        - Idempotency: Fully idempotent - calling with the same inputs always produces the
           same output. Safe to retry on timeout or transient failure.
         - Data Privacy: No input data is stored, logged, or transmitted to external services.
           All processing happens locally within the MCP server process.
